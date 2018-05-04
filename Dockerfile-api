@@ -11,10 +11,8 @@ COPY requirements-api.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # add app
-COPY currency_converter/api api
+COPY currency_converter/api .
 COPY currency_converter/currency currency
-
-WORKDIR /usr/src/app/api
 
 RUN chmod 774 entrypoint.sh
 
