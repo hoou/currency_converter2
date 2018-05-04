@@ -19,6 +19,7 @@ $ docker run hoouhoou/currency-converter [--help] --amount AMOUNT --input_curren
 #### Building docker image yourself
 ```
 $ git clone https://github.com/hoou/currency_converter2.git
+$ cd currency_converter2
 $ docker build -f Dockerfile-cli -t currency_converter .
 $ docker run --name currency_converter currency_converter [--help] --amount AMOUNT --input_currency INPUT_CURRENCY
                           [--output_currency OUTPUT_CURRENCY]
@@ -28,6 +29,7 @@ $ docker run --name currency_converter currency_converter [--help] --amount AMOU
 #### Via docker-compose (Recommended and the only way)
 ```
 $ git clone https://github.com/hoou/currency_converter2.git
+$ cd currency_converter2
 $ docker-compose -f docker-compose-api.yml up --build -d
 ```
 
