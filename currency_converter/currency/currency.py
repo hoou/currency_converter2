@@ -33,9 +33,11 @@ class Currency:
     def __init__(self, value):
         self.__check_format(value)
 
-    def __check_format(self, value):
+    def __check_format(self, value: str):
         from forex_python.converter import CurrencyCodes
         currency_codes = CurrencyCodes()
+
+        value = value.upper()
 
         try:
             # First, think of input currency argument as symbol and try to find it in dictionary
