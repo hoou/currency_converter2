@@ -1,7 +1,9 @@
 from flask_restplus import Resource
 from flask_restplus.reqparse import RequestParser
 
+from converter import get_output_rates
 from currency import Currency
+from export import to_json
 from . import api
 
 ns = api.namespace('currency_converter')
@@ -22,5 +24,6 @@ class CurrencyConverter(Resource):
         input_currency = args['input_currency']
         output_currency = args['output_currency']
 
+        output_rates = get_output_rates(amount, input_currency, output_currency)
 
-
+        return to_json(amount, input_currency, output_rates)

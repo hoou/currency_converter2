@@ -1,8 +1,9 @@
 import click
-from forex_python.converter import CurrencyRates
 
+from converter import get_output_rates
 from currency import Currency
 from currency_type import CurrencyType
+from export import to_json
 
 CURRENCY = CurrencyType()
 
@@ -20,45 +21,12 @@ def main(amount, input_currency: Currency, output_currency: Currency):
     print_output_json(amount, input_currency, output_rates)
 
 
-def get_output_rates(amount, input_currency, output_currency):
-    currency_rates = CurrencyRates()
-
-    if output_currency:
-        if input_currency == output_currency:
-            converted_amount = amount
-        else:
-            converted_amount = currency_rates.convert(input_currency.code, output_currency.code, amount)
-        output = {
-            output_currency.code: converted_amount
-        }
-    else:
-        latest_rates_for_input_currency = currency_rates.get_rates(input_currency.code)
-
-        for code, value in latest_rates_for_input_currency.items():
-            latest_rates_for_input_currency[code] = value * amount
-
-        output = latest_rates_for_input_currency
-
-    return output
-
-
 def print_output_json(amount, input_currency, output_rates):
     import json
 
     print(
         json.dumps(
-            json.loads(
-                json.dumps(
-                    {
-                        "input": {
-                            "amount": amount,
-                            "currency": input_currency.code
-                        },
-                        "output": output_rates
-                    }
-                ),
-                parse_float=lambda x: round(float(x), 2)
-            ),
+            to_json(amount, input_currency, output_rates),
             indent=4
         )
     )

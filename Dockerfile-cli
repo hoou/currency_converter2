@@ -11,8 +11,10 @@ COPY requirements-cli.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # add app
-COPY currency_converter/currency currency
 COPY currency_converter/*.py ./
+COPY currency_converter/currency currency
+COPY currency_converter/converter converter
+COPY currency_converter/export export
 
 # run
 ENTRYPOINT ["python", "currency_converter.py"]
