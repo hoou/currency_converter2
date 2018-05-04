@@ -2,7 +2,6 @@ import logging
 import os
 
 from flask import Flask, Blueprint
-# from flask_cors import CORS
 
 from .api import api
 
@@ -17,9 +16,6 @@ def create_app(script_info=None):
         os.makedirs(logs_dir)
     fh = logging.FileHandler(os.path.join(logs_dir, 'app.log'))
     app.logger.addHandler(fh)
-
-    # enable CORS
-    # CORS(app)
 
     # init API
     blueprint = Blueprint('api', __name__)
