@@ -1,7 +1,7 @@
 from flask_restplus import Resource
 from flask_restplus.reqparse import RequestParser
 
-from project.api import api
+from . import api
 
 ns = api.namespace('currency_converter')
 

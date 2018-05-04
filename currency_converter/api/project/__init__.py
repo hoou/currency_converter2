@@ -4,7 +4,7 @@ import os
 from flask import Flask, Blueprint
 # from flask_cors import CORS
 
-from project.api import api
+from .api import api
 
 
 def create_app(script_info=None):
@@ -25,7 +25,7 @@ def create_app(script_info=None):
     blueprint = Blueprint('api', __name__)
     api.init_app(blueprint)
 
-    from project.api.currency_converter import ns as currency_converter_ns
+    from .api.currency_converter import ns as currency_converter_ns
     api.add_namespace(currency_converter_ns)
 
     app.register_blueprint(blueprint)
