@@ -1,14 +1,15 @@
 from flask_restplus import Resource
 from flask_restplus.reqparse import RequestParser
 
+from currency import Currency
 from . import api
 
 ns = api.namespace('currency_converter')
 
 currency_converter_parser: RequestParser = api.parser()
 currency_converter_parser.add_argument('amount', required=True, type=float, location='args')
-currency_converter_parser.add_argument('input_currency', required=True, location='args')
-currency_converter_parser.add_argument('output_currency', location='args')
+currency_converter_parser.add_argument('input_currency', required=True, type=Currency, location='args')
+currency_converter_parser.add_argument('output_currency', type=Currency, location='args')
 
 
 @ns.route('/')
@@ -20,4 +21,6 @@ class CurrencyConverter(Resource):
         amount = args['amount']
         input_currency = args['input_currency']
         output_currency = args['output_currency']
+
+
 
