@@ -1,7 +1,8 @@
 import click
 from forex_python.converter import CurrencyRates
 
-from currency import CurrencyType, Currency
+from currency import Currency
+from currency_type import CurrencyType
 
 CURRENCY = CurrencyType()
 

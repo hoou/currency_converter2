@@ -5,15 +5,18 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # add requirements
-COPY ./requirements.txt /usr/src/app/requirements.txt
+COPY requirements-api.txt requirements.txt
 
 # install requirements
 RUN pip install -r requirements.txt
 
 # add app
-COPY . /usr/src/app
+COPY currency_converter/api api
+COPY currency_converter/currency currency
 
-RUN chmod 774 /usr/src/app/entrypoint.sh
+WORKDIR /usr/src/app/api
+
+RUN chmod 774 entrypoint.sh
 
 # run server
 CMD ["./entrypoint.sh"]

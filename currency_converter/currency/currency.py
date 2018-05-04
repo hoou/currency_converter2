@@ -1,8 +1,3 @@
-from collections import namedtuple
-
-import click
-from forex_python.converter import CurrencyCodes
-
 # Dictionary for converting currency symbols to codes
 CURRENCY_SYMBOL_DICT = {
     u"$": u"USD",
@@ -33,30 +28,31 @@ CURRENCY_SYMBOL_DICT = {
     u"₹": u"INR"
 }
 
-Currency = namedtuple('Currency', ['code', 'symbol'])
 
+class Currency:
+    def __init__(self, value):
+        self.__check_format(value)
 
-class CurrencyType(click.ParamType):
-    name = 'currency'
-
-    def convert(self, value, param, ctx):
+    def __check_format(self, value):
+        from forex_python.converter import CurrencyCodes
         currency_codes = CurrencyCodes()
 
         try:
             # First, think of input currency argument as symbol and try to find it in dictionary
-            code = CURRENCY_SYMBOL_DICT[value]
+            self.code = CURRENCY_SYMBOL_DICT[value]
 
             # When symbol found in dictionary, we already saved its code, so now just setup symbol member field
-            symbol = value
+            self.symbol = value
 
         except KeyError:
             # When symbol not found in dictionary, input currency argument is rather code
-            code = value
+            self.code = value
 
             # Now try to get its symbol
-            symbol = currency_codes.get_symbol(code)
-            if not symbol:
+            self.symbol = currency_codes.get_symbol(self.code)
+            if not self.symbol:
                 # When it cannot find its symbol, it must be invalid
-                self.fail(f'\'{value}\' is not valid currency name or symbol', param, ctx)
+                raise ValueError(f'\'{value}\' is not valid currency name or symbol')
 
-        return Currency(code, symbol)
+    def __eq__(self, other):
+        return self.code == other.code

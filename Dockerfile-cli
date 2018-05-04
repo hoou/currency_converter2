@@ -5,13 +5,14 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # add requirements
-COPY ./requirements.txt /usr/src/app/requirements.txt
+COPY requirements-cli.txt requirements.txt
 
 # install requirements
 RUN pip install -r requirements.txt
 
 # add app
-COPY . /usr/src/app
+COPY currency_converter/currency currency
+COPY currency_converter/*.py ./
 
 # run
-ENTRYPOINT ["python", "currency_converter/currency_converter.py"]
+ENTRYPOINT ["python", "currency_converter.py"]

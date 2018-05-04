@@ -4,8 +4,8 @@ services:
   api:
     container_name: cc_api
     build:
-      context: services/api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile-api
     ports:
       - 5001:5000
     environment:
