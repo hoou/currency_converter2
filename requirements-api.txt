@@ -3,3 +3,4 @@ flask-restplus==0.10.1
 pytest-flask==0.10.0
 coverage==4.5.1
 redis==2.10.6
+forex-python==0.3.3
