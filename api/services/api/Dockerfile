@@ -15,7 +15,5 @@ COPY . /usr/src/app
 
 RUN chmod 774 /usr/src/app/entrypoint.sh
 
-ENV FLASK_DEBUG 1
-
 # run server
 CMD ["./entrypoint.sh"]

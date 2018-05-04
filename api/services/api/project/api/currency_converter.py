@@ -1,4 +1,3 @@
-from flask import current_app
 from flask_restplus import Resource
 from flask_restplus.reqparse import RequestParser
 
@@ -22,6 +21,3 @@ class CurrencyConverter(Resource):
         input_currency = args['input_currency']
         output_currency = args['output_currency']
 
-        current_app.logger.info(amount)
-        current_app.logger.info(input_currency)
-        current_app.logger.info(output_currency)

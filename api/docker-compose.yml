@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  api:
+    container_name: cc_api
+    build:
+      context: services/api
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_DEBUG=1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - USE_CACHE=1
+    depends_on:
+      - redis
+
+  redis:
+    container_name: cc_redis
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
