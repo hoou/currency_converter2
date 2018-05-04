@@ -6,6 +6,8 @@ from project.redis import redis
 
 currency_rates = CurrencyRates()
 
+THIRTY_MINUTES = 1800
+
 
 def get_cached_output_rates(amount, input_currency: Currency, output_currency: Currency):
     if output_currency:
@@ -17,6 +19,7 @@ def get_cached_output_rates(amount, input_currency: Currency, output_currency: C
         else:
             rate = currency_rates.get_rate(input_currency.code, output_currency.code)
             redis.hset(input_currency.code, output_currency.code, rate)
+            redis.expire(input_currency.code, THIRTY_MINUTES)
 
         return {
             output_currency.code: rate * amount
@@ -27,6 +30,7 @@ def get_cached_output_rates(amount, input_currency: Currency, output_currency: C
 
         for code, rate in latest_rates_for_input_currency.items():
             redis.hset(input_currency.code, code, rate)
+            redis.expire(input_currency.code, THIRTY_MINUTES)
             latest_rates_for_input_currency[code] = rate * amount
 
         return latest_rates_for_input_currency
